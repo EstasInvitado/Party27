@@ -67,30 +67,28 @@ canvas {
 }
 
 /* sello */
+/* sello con imagen */
 .seal {
     position: absolute;
     top: 95px;
     left: 50%;
     transform: translateX(-50%);
-    width: 65px;
-    height: 65px;
-    background: radial-gradient(circle at 30% 30%, #ff4d4d, #6b0000);
-    border-radius: 50%;
-    box-shadow: inset 0 3px 8px rgba(0,0,0,0.4),
-                0 10px 20px rgba(0,0,0,0.3);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 22px;
-    color: gold;
+    width: 75px;
+    height: 75px;
+    object-fit: contain;
+    cursor: pointer;
     z-index: 10;
-    transition: 0.6s;
+
+    filter: drop-shadow(0 6px 10px rgba(0,0,0,0.4));
+    transition: 0.7s ease;
 }
 
-.seal::before {
-    content: "✿";
+/* efecto hover elegante */
+.seal:hover {
+    transform: translateX(-50%) scale(1.05);
 }
 
+/* animación de romper */
 .seal.broken {
     transform: translateX(-50%) scale(0.2) rotate(40deg);
     opacity: 0;
@@ -179,7 +177,11 @@ button {
 
 <div class="envelope" id="env">
 
-    <div class="seal" id="seal" onclick="breakSeal(event)"></div>
+    <img src="https://github.com/EstasInvitado/Party27/blob/main/sello.png?raw=true"
+     class="seal"
+     id="seal"
+     onclick="breakSeal(event)">
+     
     <div class="flap"></div>
 
     <div class="card">
