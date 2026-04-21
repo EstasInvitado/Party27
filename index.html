@@ -139,7 +139,8 @@ canvas {
 h1 {
     font-family: 'Great Vibes', cursive;
     font-size: 38px;
-    color: #7a8fb5; /* azul aristocrático */
+    color: #7a8fb5;
+    line-height: 1; /* 👈 reduce el espacio entre renglones */
 }
 
 p {
@@ -188,15 +189,14 @@ button {
     bottom: 0;
     left: 0;
     width: 100%;
-    display: flex;
-    justify-content: space-around;
-    align-items: flex-end;
-    pointer-events: none; /* no bloquea clicks */
-    z-index: 1; /* debajo del sobre */
+    height: 200px;
+    pointer-events: none;
+    z-index: 1;
 }
 
 /* estilos base */
 .flower-img {
+    position: absolute;
     object-fit: contain;
     opacity: 0.95;
 }
@@ -208,6 +208,7 @@ button {
 
 .flower-img.medium {
     width: 120px;
+    transform: rotate(80deg);
 }
 
 .flower-img.large {
@@ -221,6 +222,46 @@ button {
 
 .flower-img:nth-child(even) {
     transform: rotate(8deg);
+}
+/* flor 1 */
+.flower-img:nth-child(1) {
+    width: 140px;
+    left: 5%;
+    bottom: -30%;
+    transform: rotate(-10deg);
+}
+
+/* flor 2 */
+.flower-img:nth-child(2) {
+    width: 180px;
+    left: 20%;
+    bottom: -30%;
+    transform: rotate(15deg);
+}
+
+/* flor 3 (más grande al centro) */
+.flower-img:nth-child(3) {
+    width: 220px;
+    left: 40%;
+    bottom: -50%;
+    transform: rotate(-5deg);
+    z-index: 2;
+}
+
+/* flor 4 */
+.flower-img:nth-child(4) {
+    width: 130px;
+    left: 65%;
+    bottom: -30%;
+    transform: rotate(20deg);
+}
+
+/* flor 5 */
+.flower-img:nth-child(5) {
+    width: 160px;
+    left: 80%;
+    bottom: -25%;
+    transform: rotate(-15deg);
 }
 </style>
 </head>
@@ -243,10 +284,9 @@ button {
     <div class="card">
         <h1 class="glow">Estás cordialmente invitada</h1>
         <p>
-            A una velada digna de la alta sociedad.<br><br>
-            ✨ Un cumpleaños de ensueño ✨<br><br>
-            Vestimenta: elegancia romántica<br>
-            Hora: 7:00 PM
+            ✨ Picnic en la playa ✨ <br><br>
+           Sabado 16 de mayo <br>
+          Hora: 2:00 PM
         </p>
 
         <button onclick="alert('Asistencia confirmada 💌')">
@@ -255,12 +295,11 @@ button {
     </div>
 </div>
 <div class="bottom-flowers">
-    <img src="/mnt/data/image.png" class="flower-img small">
-    <img src="/mnt/data/image.png" class="flower-img medium">
-    <img src="/mnt/data/image.png" class="flower-img large">
-    <img src="/mnt/data/image.png" class="flower-img small">
-    <img src="/mnt/data/image.png" class="flower-img medium">
-    <img src="/mnt/data/image.png" class="flower-img small">
+    <img src="https://github.com/EstasInvitado/Party27/blob/main/hortensia.png?raw=true" class="flower-img small">
+    <img src="https://github.com/EstasInvitado/Party27/blob/main/hortensia.png?raw=true" class="flower-img medium">
+    <img src="https://github.com/EstasInvitado/Party27/blob/main/hortensia.png?raw=true" class="flower-img large">
+    <img src="https://github.com/EstasInvitado/Party27/blob/main/hortensia.png?raw=true" class="flower-img small">
+    <img src="https://github.com/EstasInvitado/Party27/blob/main/hortensia.png?raw=true" class="flower-img medium">
 </div>
 <script>
 
@@ -346,10 +385,12 @@ function animateFW(){
         p.y += p.vy;
         p.alpha -= 0.01;
 
-        ctx.fillStyle = `rgba(255,215,0,${p.alpha})`;
-        ctx.fillRect(p.x,p.y,3,3);
-    });
+          ctx.fillStyle = `rgba(255,215,0,${p.alpha})`;
 
+    ctx.beginPath();
+    ctx.arc(p.x, p.y, 5, 0, Math.PI * 2);
+    ctx.fill();
+});
     particlesFW = particlesFW.filter(p=>p.alpha>0);
     requestAnimationFrame(animateFW);
 }
