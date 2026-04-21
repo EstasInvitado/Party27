@@ -41,29 +41,43 @@ canvas {
     0% {transform: translateY(110vh) scale(0.4);}
     100% {transform: translateY(-10vh) scale(1.2);}
 }
+.top-decoration {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    pointer-events: none; /* no bloquea clicks */
+    z-index: 9999;
+
+    /* opcional: que se vea más elegante */
+    opacity: 0.9;
+}
 
 /* sobre */
 .envelope {
     width: 360px;
     height: 260px;
-    background: #f7e9ee;
+    background: linear-gradient(145deg, #cfd8e6, #a9b7d1);
     border-radius: 12px;
-    border: 2px solid #c9a3b0;
+    border: 5px solid #a9b7d1;
     position: relative;
-    box-shadow: 0 30px 60px rgba(0,0,0,0.3);
+    box-shadow: 0 30px 60px rgba(0,0,0,0.25);
     cursor: pointer;
     transition: 1s;
 }
+
 
 /* flap */
 .flap {
     position: absolute;
     width: 100%;
     height: 55%;
-    background: #e8cfd8;
+    background: linear-gradient(160deg, #b7c5dc, #dcd6f7);
     clip-path: polygon(0 0, 100% 0, 50% 100%);
     transform-origin: top;
     transition: 1s;
+    border-bottom: 1px solid rgba(212,175,55,0.4);
+    
 }
 
 /* sello */
@@ -101,8 +115,8 @@ canvas {
     height: 92%;
     top: 4%;
     left: 4%;
-    background: linear-gradient(#fffaf0, #f3e3c3);
-    border: 1px solid #d8c3a5;
+    background: linear-gradient(#f8f4ef, #efe6d8);
+    border: 1px solid #d4af37;
     opacity: 0;
     transform: translateY(40px) scale(0.9);
     transition: 1.2s;
@@ -125,23 +139,24 @@ canvas {
 h1 {
     font-family: 'Great Vibes', cursive;
     font-size: 38px;
-    color: #b76e79;
+    color: #7a8fb5; /* azul aristocrático */
 }
 
 p {
     font-size: 14px;
-    color: #5c4a50;
+    color: #4a4a5a;
 }
 
 /* botón */
 button {
     margin-top: 10px;
-    padding: 8px 15px;
+    padding: 10px 18px;
     border: none;
-    background: #c08aa1;
+    background: linear-gradient(145deg, #d4af37, #b8962e);
     color: white;
-    border-radius: 20px;
+    border-radius: 25px;
     cursor: pointer;
+    font-weight: 500;
 }
 
 /* glow */
@@ -168,10 +183,51 @@ button {
     from {transform: translateY(0); opacity: 1;}
     to {transform: translateY(-200px); opacity: 0;}
 }
+.bottom-flowers {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    align-items: flex-end;
+    pointer-events: none; /* no bloquea clicks */
+    z-index: 1; /* debajo del sobre */
+}
+
+/* estilos base */
+.flower-img {
+    object-fit: contain;
+    opacity: 0.95;
+}
+
+/* tamaños variados */
+.flower-img.small {
+    width: 80px;
+}
+
+.flower-img.medium {
+    width: 120px;
+}
+
+.flower-img.large {
+    width: 160px;
+}
+
+/* efecto más natural */
+.flower-img:nth-child(odd) {
+    transform: rotate(-8deg);
+}
+
+.flower-img:nth-child(even) {
+    transform: rotate(8deg);
+}
 </style>
 </head>
 
 <body>
+    <img src="https://github.com/EstasInvitado/Party27/blob/main/glicina%20corte.png?raw=true"
+     class="top-decoration">
 
 <canvas id="fireworks"></canvas>
 
@@ -198,7 +254,14 @@ button {
         </button>
     </div>
 </div>
-
+<div class="bottom-flowers">
+    <img src="/mnt/data/image.png" class="flower-img small">
+    <img src="/mnt/data/image.png" class="flower-img medium">
+    <img src="/mnt/data/image.png" class="flower-img large">
+    <img src="/mnt/data/image.png" class="flower-img small">
+    <img src="/mnt/data/image.png" class="flower-img medium">
+    <img src="/mnt/data/image.png" class="flower-img small">
+</div>
 <script>
 
 // ===== MUSICA =====
@@ -275,7 +338,7 @@ function startFireworks(){
     }
 }
 function animateFW(){
-    ctx.fillStyle = "rgba(0,0,0,0.15)";
+    ctx.fillStyle = "rgba(255,255,255,0.15)";
     ctx.fillRect(0,0,canvas.width,canvas.height);
 
     particlesFW.forEach(p=>{
