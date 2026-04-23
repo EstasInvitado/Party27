@@ -303,43 +303,80 @@ button {
 </div>
 <script>
 
-// ===== MUSICA =====
+// ===== MUSICA Vals Elegante tipo Bridgerton =====
+// ===== MUSICA estilo pop electrónico (tipo 360) =====
+// ===== MUSICA estilo Mozart (clásico elegante) =====
+// ===== MUSICA estilo Vivaldi (barroco / violines rápidos) =====
 let audioCtx;
+let i = 0;
+
+// 🎻 melodía inspirada en estilo barroco (tipo Las Cuatro Estaciones)
+const melody = [
+    {note: 523.25, dur: 0.3}, // C
+    {note: 659.25, dur: 0.3}, // E
+    {note: 783.99, dur: 0.3}, // G
+    {note: 1046.50, dur: 0.5}, // C alto (impacto)
+
+    {note: 783.99, dur: 0.3}, // G
+    {note: 880.00, dur: 0.3}, // A
+    {note: 783.99, dur: 0.3}, // G
+    {note: 659.25, dur: 0.5}, // E
+
+    {note: 523.25, dur: 0.3}, // C
+    {note: 659.25, dur: 0.3}, // E
+    {note: 783.99, dur: 0.3}, // G
+    {note: 1046.50, dur: 0.8}, // C final (gran anuncio)
+];
+
+// 🎻 reproducción estilo violín rápido
+function playMelody(){
+    if(!audioCtx) return;
+
+    const noteData = melody[i % melody.length];
+
+    let osc = audioCtx.createOscillator();
+    let gain = audioCtx.createGain();
+
+    osc.frequency.value = noteData.note;
+    osc.type = "triangle"; // 🎻 más parecido a cuerdas
+
+    // ✨ ataque tipo arco de violín
+    gain.gain.setValueAtTime(0, audioCtx.currentTime);
+    gain.gain.linearRampToValueAtTime(0.1, audioCtx.currentTime + 0.02);
+    gain.gain.linearRampToValueAtTime(0, audioCtx.currentTime + noteData.dur);
+    gain.gain.value = 0.25;
+    osc.connect(gain);
+    gain.connect(audioCtx.destination);
+
+    osc.start();
+    osc.stop(audioCtx.currentTime + noteData.dur);
+
+    i++;
+
+    window.musicTimeout = setTimeout(playMelody, noteData.dur * 1000);
+}
+
+// ▶️ iniciar música
 function playMusic(){
     audioCtx = new (window.AudioContext || window.webkitAudioContext)();
 
-    const notes = [261.63, 329.63, 392.00, 523.25];
-    let i = 0;
+    if (audioCtx.state === "suspended") {
+        audioCtx.resume();
+    }
 
-    window.musicInterval = setInterval(() => {
-        let osc = audioCtx.createOscillator();
-        let gain = audioCtx.createGain();
-
-        osc.frequency.value = notes[i % notes.length];
-        osc.type = "sine";
-
-        gain.gain.value = 0.03;
-
-        osc.connect(gain);
-        gain.connect(audioCtx.destination);
-
-        osc.start();
-        osc.stop(audioCtx.currentTime + 0.6);
-
-        i++;
-    }, 700);
+    playMelody();
 }
 
-
-// detener música
+// ⏹️ detener música
 function stopMusic(){
-    if(window.musicInterval){
-        clearInterval(window.musicInterval);
+    if(window.musicTimeout){
+        clearTimeout(window.musicTimeout);
     }
     if(audioCtx){
         audioCtx.close();
     }
 }
+
 
 // ===== ABRIR =====
 function breakSeal(e){
