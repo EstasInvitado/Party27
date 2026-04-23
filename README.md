@@ -2,6 +2,8 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
+ <meta name="viewport" content="width=device-width, initial-scale=1.0">
+ 
  <!-- Metadatos Open Graph -->
     <meta property="og:title" content="Invitación Real✨">
     <meta property="og:description" content="Click here">
